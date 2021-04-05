@@ -15,7 +15,7 @@ const AuthPage = ({ auth: { isAuthenticated } }) => {
     return <Redirect to="/" />;
   }
   return (
-    <div className="container" style={{ marginTop: '3rem' }}>
+    <div className="container" style={{ marginTop: '5rem' }}>
       <div className="row">
         <div className="col s6">
           <SignUp />

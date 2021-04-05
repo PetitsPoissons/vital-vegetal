@@ -17,9 +17,9 @@
   opacity: 0.9;
 }
 
-/***| NAVBAR |***/
+/*****| NAVBAR |*****/
 nav .nav-wrapper {
-  background: linear-gradient(to bottom, white 60%, transparent 80%);
+  background: linear-gradient(to bottom, white 55%, transparent 70%);
   z-index: -1;
 }
 #hamburger-menu {
@@ -35,12 +35,22 @@ nav ul a {
   z-index: 100;
 }
 
-/***| HOME PAGE |***/
+/*****| HOME PAGE |*****/
 img {
   width: 100%;
 }
 
-/***| SIGN UP FORM |***/
+/*****| WHYVEGAN PAGE |*****/
+.why-vegan p {
+  margin-top: 1rem;
+}
+
+#hello {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/*****| AUTH PAGE |*****/
 /* label color */
 .input-field label {
   color: #000;

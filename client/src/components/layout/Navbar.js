@@ -58,7 +58,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading, me } }) => {
           </Link>
         </li>
         <li>
-          <Link to="#!">
+          <Link to="/why-vegan">
             <i className="material-icons grey-text text-darken-4">info</i>Why
             vegan?
           </Link>
