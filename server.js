@@ -1,7 +1,6 @@
 require('dotenv').config(); // access variables set in the .env file via `process.env.VARIABLE_NAME` syntax
 const express = require('express');
 const connectDB = require('./config/connection');
-const morgan = require('morgan');
 const cors = require('cors');
 
 // Create the Express app
@@ -11,7 +10,6 @@ const app = express();
 connectDB();
 
 // Attach the middleware
-app.use(morgan('dev')); // dev help debug
 app.use(cors()); // this allows http requests to servers with different domain names (we are going back and forth between localhost:3000 and localhost:5000 for our http requests)
 app.use(express.json()); // body parser - allows us to access req.body
 
