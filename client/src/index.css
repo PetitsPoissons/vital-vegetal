@@ -1,13 +1,74 @@
-body {
+/*****| GLOBAL STYLES |*****/
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.no-shadows {
+  box-shadow: none !important;
+}
+
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+}
+
+/***| NAVBAR |***/
+nav .nav-wrapper {
+  background: linear-gradient(to bottom, white 60%, transparent 80%);
+  z-index: -1;
+}
+#hamburger-menu {
+  font-size: 3rem;
+}
+
+#vv-title {
+  font-size: 3rem;
+}
+
+nav ul a {
+  font-size: 1.2rem;
+  z-index: 100;
+}
+
+/***| HOME PAGE |***/
+img {
+  width: 100%;
+}
+
+/***| SIGN UP FORM |***/
+/* label color */
+.input-field label {
+  color: #000;
+}
+/* label focus color */
+.input-field input:focus + label {
+  color: #000 !important;
+}
+/* label underline focus color */
+.input-field input:focus {
+  border-bottom: 1px solid #000 !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+/* valid color */
+.input-field input.valid {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+/* invalid color */
+.input-field input.invalid {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #000;
+}
+
+.altAuthTxt {
+  margin: 2rem 1rem;
 }

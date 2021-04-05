@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+// React imports
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-function App() {
+// Redux imports
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchMe } from './actions/authActions';
+
+// Components
+import Navbar from './components/layout/Navbar';
+import HomePage from './components/pages/HomePage';
+import AuthPage from './components/pages/AuthPage';
+
+const App = ({ fetchMe }) => {
+  useEffect(() => {
+    if (localStorage.token) {
+      fetchMe();
+    }
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Switch>
+        <Route exact path="/" component={HomePage}></Route>
+        <Route exact path="/auth" component={AuthPage}></Route>
+      </Switch>
+    </BrowserRouter>
   );
-}
+};
 
-export default App;
+App.propTypes = {
+  fetchMe: PropTypes.func.isRequired,
+};
+
+export default connect(null, { fetchMe })(App);

@@ -11,7 +11,7 @@ const User = require('../models/User');
 // @access  Private
 router.get('/me', checkToken, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select('-password');
+    const user = await User.findById(req.userId).select('-password -__v');
     res.status(200).json(user);
   } catch (err) {
     console.log(err.message);
