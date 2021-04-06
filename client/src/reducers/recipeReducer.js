@@ -27,6 +27,12 @@ export default function (state = initialState, action) {
         loading: false,
         selectedRecipe: payload,
       };
+    case ADD_RECIPE:
+      return {
+        ...state,
+        loading: false,
+        recipes: [payload, ...state.recipes],
+      };
     case RECIPE_ERROR:
       return {
         ...state,

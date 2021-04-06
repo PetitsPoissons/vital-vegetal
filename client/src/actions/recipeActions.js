@@ -36,3 +36,25 @@ export const getRecipe = (recipeId) => async (dispatch) => {
     });
   }
 };
+
+// Add a recipe
+export const addRecipe = (formData) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const res = await axios.post('/api/recipes', formData, config);
+    dispatch({
+      type: ADD_RECIPE,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: RECIPE_ERROR,
+      payload: 'Server error',
+    });
+  }
+};

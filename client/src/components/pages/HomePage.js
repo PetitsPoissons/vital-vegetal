@@ -21,14 +21,11 @@ const HomePage = () => {
       </div>
       <div className="section white">
         <div className="row container">
-          <h3 className="header">Header</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio,
-            nostrum minus doloremque quisquam veritatis voluptates officiis.
-            Harum, esse quibusdam id minima, incidunt veniam dolorum, neque
-            sequi aliquid voluptas quidem atque qui corrupti fugiat voluptatem
-            repellat molestiae obcaecati provident necessitatibus quisquam! In
-            sint quidem doloribus maxime ut iusto quod? Tenetur, sed!
+          <h3 className="header">Welcome to Vital Vegetal!</h3>
+          <p className="flow-text">
+            This is an online cookbook and informational page, all about
+            veganism! Here I share some of my favorite meals, snacks, and
+            explanations on the importance of a plant-based diet. Enjoy!
           </p>
         </div>
       </div>

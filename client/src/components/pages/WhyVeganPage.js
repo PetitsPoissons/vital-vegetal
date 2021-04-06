@@ -159,9 +159,9 @@ const WhyVeganPage = () => {
       <div className="section white">
         <div className="row container why-vegan">
           <p className="flow-text">
-            For those less concerned about the well-being of animals,
-            considering we are in fact omnivores and one might call it “the
-            circle of life”, we can think about our planet.
+            Regardless of the animal cruelty in these industries, a meat and
+            dairy-involved diet is having a horrible impact on climate change
+            and our planet earth.
           </p>
           <p className="flow-text">
             In October 2018, the intern governmental panel released a statement

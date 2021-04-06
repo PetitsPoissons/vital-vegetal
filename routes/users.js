@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -51,24 +52,19 @@ router.post('/signin', checkUserInput, async (req, res) => {
 // @desc - Create a new user and return the token
 // @access - Public
 router.post('/signup', checkUserInput, async (req, res) => {
-  const { username, email, password } = req.body;
   try {
     // check if user already exists in db
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email: req.body.email });
     if (user) {
       return res.status(400).json({ errorMsg: 'User already exists' });
     }
 
     // instantiate a new user
-    newUser = new User({
-      username,
-      email,
-      password,
-    });
+    newUser = new User(req.body);
 
     // encrypt the password
     const salt = await bcrypt.genSalt(10);
-    newUser.password = await bcrypt.hash(password, salt);
+    newUser.password = await bcrypt.hash(req.body.password, salt);
 
     // save the new user to the db
     await newUser.save();

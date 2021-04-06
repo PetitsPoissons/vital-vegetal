@@ -14,7 +14,7 @@ router.post('/', checkToken, async (req, res) => {
     });
   }
   // check if ingredient already exists in db
-  let ingredient = await Ingredient.findOne({ name });
+  const ingredient = await Ingredient.findOne({ name });
   if (ingredient) {
     return res.status(400).json({ errorMsg: 'Ingredient already exists' });
   }
@@ -28,6 +28,21 @@ router.post('/', checkToken, async (req, res) => {
       description,
     }).save();
     res.status(200).json(newIngredient);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/ingredients
+// @desc    Get all ingredients
+// @access  Public
+router.get('/', async (req, res) => {
+  try {
+    const ingredients = await Ingredient.find()
+      .select('-__v')
+      .sort({ name: 1 });
+    res.json(ingredients);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
