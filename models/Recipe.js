@@ -16,10 +16,16 @@ const RecipeSchema = new mongoose.Schema({
     required: true,
     enum: ['Breakfast', 'Lunch', 'Snack', 'Dinner', 'Dessert', 'Drink'],
   },
+  image: {
+    type: String,
+  },
   preparationTime: {
     type: String,
   },
   difficulty: {
+    type: String,
+  },
+  servings: {
     type: String,
   },
   instructions: [

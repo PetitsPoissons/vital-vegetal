@@ -3,6 +3,7 @@ const router = express.Router();
 const checkToken = require('../helpers/checkToken');
 const Recipe = require('../models/Recipe');
 const RecipeIngredients = require('../models/RecipeIngredients');
+const Ingredient = require('../models/Ingredient');
 
 // @route - POST api/posts
 // @desc - Create a recipe
@@ -78,7 +79,34 @@ router.get('/:id', async (req, res) => {
     if (!recipe) {
       return res.status(404).json({ errorMsg: 'Recipe not found' });
     }
-    res.json(recipe);
+    const recipeIngredients = await RecipeIngredients.find({
+      recipeId: recipe._id,
+    }).populate({ path: 'ingredientId', select: '-__v' });
+    // create the recipe object to return to client
+    const recipeObj = {
+      _id: recipe._id,
+      name: recipe.name,
+      source: recipe.source,
+      category: recipe.category,
+      image: recipe.image,
+      preparationTime: recipe.preparationTime,
+      difficulty: recipe.difficulty,
+      servings: recipe.servings,
+      instructions: recipe.instructions,
+      note: recipe.note,
+      createdAt: recipe.createdAt,
+      ingredients: recipeIngredients.map((item) => {
+        return {
+          _id: item.ingredientId._id,
+          name: item.ingredientId.name,
+          type: item.ingredientId.type,
+          description: item.ingredientId.description,
+          quantity: item.quantity,
+          note: item.note,
+        };
+      }),
+    };
+    res.json(recipeObj);
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {

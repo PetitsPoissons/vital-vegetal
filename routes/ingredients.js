@@ -8,9 +8,9 @@ const Ingredient = require('../models/Ingredient');
 // @access - Private
 router.post('/', checkToken, async (req, res) => {
   const { name, type, description } = req.body;
-  if (![name, type].every(Boolean)) {
+  if (!name) {
     return res.status(400).json({
-      errorMsg: 'Missing inputs',
+      errorMsg: 'Missing name of ingredient',
     });
   }
   // check if ingredient already exists in db
