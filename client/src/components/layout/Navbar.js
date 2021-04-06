@@ -64,7 +64,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading, me } }) => {
           </Link>
         </li>
         <li>
-          <Link to="#!">
+          <Link to="/recipes">
             <i className="material-icons grey-text text-darken-4">menu_book</i>
             Recipes
           </Link>

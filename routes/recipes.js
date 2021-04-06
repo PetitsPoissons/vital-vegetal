@@ -62,7 +62,7 @@ router.post('/', checkToken, async (req, res) => {
 // @access  Public
 router.get('/', async (req, res) => {
   try {
-    const recipes = await Recipe.find().sort({ name: 1 });
+    const recipes = await Recipe.find().select('-__v').sort({ name: 1 });
     res.json(recipes);
   } catch (err) {
     console.error(err.message);

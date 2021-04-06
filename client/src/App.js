@@ -11,6 +11,7 @@ import { fetchMe } from './actions/authActions';
 import Navbar from './components/layout/Navbar';
 import HomePage from './components/pages/HomePage';
 import WhyVeganPage from './components/pages/WhyVeganPage';
+import RecipePage from './components/pages/RecipePage';
 import AuthPage from './components/pages/AuthPage';
 
 const App = ({ fetchMe }) => {
@@ -25,6 +26,7 @@ const App = ({ fetchMe }) => {
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
         <Route exact path="/why-vegan" component={WhyVeganPage}></Route>
+        <Route exact path="/recipes" component={RecipePage}></Route>
         <Route exact path="/auth" component={AuthPage}></Route>
       </Switch>
     </BrowserRouter>

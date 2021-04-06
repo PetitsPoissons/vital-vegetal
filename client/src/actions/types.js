@@ -3,3 +3,7 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
+export const ADD_RECIPE = 'ADD_RECIPE';
+export const GET_RECIPES = 'GET_RECIPES';
+export const GET_RECIPE = 'GET_RECIPE';
+export const RECIPE_ERROR = 'RECIPE_ERROR';
