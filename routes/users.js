@@ -47,8 +47,6 @@ router.post('/signin', checkUserInput, async (req, res) => {
   }
 });
 
-module.exports = router;
-
 // @route - POST api/users/signup
 // @desc - Create a new user and return the token
 // @access - Public

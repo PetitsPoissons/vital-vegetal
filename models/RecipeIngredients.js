@@ -20,5 +20,8 @@ const RecipeIngredientsSchema = new mongoose.Schema({
   },
 });
 
-const RecipeIngredients = mongoose.model('recipeIngredients', RecipeSchema);
+const RecipeIngredients = mongoose.model(
+  'recipeIngredients',
+  RecipeIngredientsSchema
+);
 module.exports = RecipeIngredients;

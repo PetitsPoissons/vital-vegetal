@@ -15,6 +15,8 @@ app.use(express.json()); // body parser - allows us to access req.body
 
 // Attach the routes
 app.use('/api/users', require('./routes/users'));
+app.use('/api/recipes', require('./routes/recipes'));
+app.use('/api/ingredients', require('./routes/ingredients'));
 
 // This code will only run if we are in production
 if (process.env.NODE_ENV === 'production') {

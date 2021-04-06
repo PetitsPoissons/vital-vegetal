@@ -20,9 +20,14 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
   },
   difficulty: {
-    type: Number,
+    type: String,
   },
-  instructions: [],
+  instructions: [
+    {
+      step: { type: String },
+      instructionText: { type: String },
+    },
+  ],
   note: {
     type: String,
   },
@@ -30,7 +35,6 @@ const RecipeSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  ingredients: [RecipeIngredientsSchema],
 });
 
 const Recipe = mongoose.model('recipe', RecipeSchema);
