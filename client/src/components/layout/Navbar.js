@@ -9,6 +9,7 @@ import { logout } from '../../actions/authActions';
 
 // Style & Images
 import M from 'materialize-css';
+import vvLogoTransparentBg from '../../assets/vv-logo-transparentBg.png';
 
 const Navbar = ({ logout, auth: { isAuthenticated, loading, me } }) => {
   useEffect(() => {
@@ -52,6 +53,11 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading, me } }) => {
       <li>
         <Link to="/recipes" className="grey-text text-darken-4">
           Recipes
+        </Link>
+      </li>
+      <li>
+        <Link to="/auth" className="grey-text text-darken-4">
+          <i className="material-icons grey-text text-darken-4">how_to_reg</i>
         </Link>
       </li>
     </ul>
@@ -100,15 +106,16 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading, me } }) => {
             {isAuthenticated ? authLinksMain : guestLinksMain}
           </div>
           <div className="nav-wrapper" style={{ marginTop: '2rem' }}>
-            <div className="center-align">
-              <Link
-                to="/"
-                className="large grey-text text-darken-4"
-                id="vv-title"
-              >
-                Vital Vegetal
-              </Link>
-            </div>
+            <Link to="/" className="grey-text text-darken-4">
+              <div className="container-logo valign-wrapper">
+                <img
+                  src={vvLogoTransparentBg}
+                  alt="Vital Vegetal Logo"
+                  className="center-align"
+                />
+                <span id="vv-title">Vital Vegetal</span>
+              </div>
+            </Link>
           </div>
         </nav>
       </div>

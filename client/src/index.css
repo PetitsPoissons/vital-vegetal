@@ -19,7 +19,7 @@
 
 /*****| NAVBAR |*****/
 nav .nav-wrapper {
-  background: linear-gradient(to bottom, white 55%, transparent 70%);
+  background: linear-gradient(to bottom, white 70%, transparent 90%);
   z-index: -1;
 }
 #hamburger-menu {
@@ -33,6 +33,13 @@ nav .nav-wrapper {
 nav ul a {
   font-size: 1.2rem;
   z-index: 100;
+}
+.container-logo {
+  display: flex;
+  justify-content: center;
+}
+.container-logo img {
+  width: 5vw;
 }
 
 /*****| HOME PAGE |*****/
