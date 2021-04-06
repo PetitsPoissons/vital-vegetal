@@ -82,3 +82,18 @@ img {
 .altAuthTxt {
   margin: 2rem 1rem;
 }
+
+/*****| RECIPE CARD |*****/
+.recipe-desc,
+.recipe-desc-title {
+  font-weight: 600;
+}
+
+.recipe-desc-title {
+  text-decoration: underline;
+}
+
+.recipe-ingredients,
+.recipe-instructions {
+  margin: 1rem 1.5rem;
+}

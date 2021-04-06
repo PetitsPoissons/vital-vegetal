@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { getRecipes } from '../../actions/recipeActions';
 
 // Components
-import RecipeOverview from './RecipeOverview';
+import RecipeDetail from './RecipeDetail';
 
 const RecipeList = ({ getRecipes, recipe: { loading, recipes } }) => {
   useEffect(() => {
@@ -19,7 +19,7 @@ const RecipeList = ({ getRecipes, recipe: { loading, recipes } }) => {
   ) : (
     <div className="container recipe-cards">
       {recipes.map((recipe) => (
-        <RecipeOverview key={recipe._id} recipe={recipe} />
+        <RecipeDetail key={recipe._id} recipe={recipe} />
       ))}
     </div>
   );

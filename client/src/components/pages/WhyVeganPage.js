@@ -33,7 +33,7 @@ const WhyVeganPage = () => {
       <div className="section white">
         <div className="row container why-vegan">
           <h3 className="header">Why Vegan?</h3>
-          <p>
+          <p className="flow-text">
             Every year since 2009 in Yulin, Guangxi, China, there has been an
             event called the lychee and dog meat festival. In preparation for
             this event, thousands of dogs are kept in concrete pens. Many are
@@ -42,7 +42,7 @@ const WhyVeganPage = () => {
             this is their life, never to see the light of day until the time of
             their death. They are raped, abused, and tortured needlessly.
           </p>
-          <p>
+          <p className="flow-text">
             In many cosmetic and medical industries we hear about animal
             testing, performing experiments that scare and often kill other
             sentient beings. Naturally, there are large movements with millions
@@ -51,14 +51,14 @@ const WhyVeganPage = () => {
             leading to improvements and change. After all, how can it be okay to
             hurt innocent animals, who just want to live their lives?
           </p>
-          <p>
+          <p className="flow-text">
             Let’s switch this situation a little. Instead of the monkeys and
             rabbits used as an object for experiment, instead of dogs kept in
             cages and mutilated by us and each other, envision a different
             animal: a cow. Or a pig, or a chicken, exploited and murdered for a
             fifteen minute meal you’ll forget about in no time.
           </p>
-          <p>
+          <p className="flow-text">
             Suddenly social media is quiet, suddenly this is okay. But what
             difference is there really?
           </p>
@@ -71,7 +71,7 @@ const WhyVeganPage = () => {
       </div>
       <div className="section white">
         <div className="row container why-vegan">
-          <p>
+          <p className="flow-text">
             <span id="hello">Hello</span>, my name is Marielle Williamson, and I
             am vegan. I’m not going to deny the fact that animal flesh and
             secretions taste good, they really do. That was the hardest part of
@@ -81,14 +81,14 @@ const WhyVeganPage = () => {
             out to lunch with my dad. I saw this as food, good food, and an
             enjoyable moment, and didn’t think about the process. The murder.
           </p>
-          <p>
+          <p className="flow-text">
             Most people would say they are against animal abuse. We’ve seen this
             through petitions for cruelty free products, lowering the use of
             plastic straws, and increased demand for more “ethical” labels like
             free-range, pasture raised, etc. But what if these labels were just
             a curtain covering what is really happening?
           </p>
-          <p>
+          <p className="flow-text">
             I was vegetarian for around four years, with the sole reason being
             that the concept of killing an animal for food felt wrong. Around
             six months ago, I transitioned to vegan after finding out just how
@@ -97,7 +97,7 @@ const WhyVeganPage = () => {
             what valid reason do I have as an individual for supporting such an
             industry?
           </p>
-          <p>
+          <p className="flow-text">
             The first I thought of was taste. People eat meat and animal
             products because they get pleasure from the taste. But does taste
             justify encouraging abusive industries? We could compare it to
@@ -122,13 +122,13 @@ const WhyVeganPage = () => {
       </div>
       <div className="section white">
         <div className="row container why-vegan">
-          <p>
+          <p className="flow-text">
             But, you don’t need to kill an animal for milk and eggs, right?
             While that is technically true, these companies treat animals as
             objects and machines, and exploit them for their products until they
             are all eventually sent to slaughter.
           </p>
-          <p>
+          <p className="flow-text">
             Cows are mammals and need to be pregnant to produce milk. This is
             why farmers use a process called artificial insemination to forcibly
             impregnate a cow. Only once she gives birth, she is separated from
@@ -139,7 +139,7 @@ const WhyVeganPage = () => {
             females and cannot produce eggs, therefore are deemed useless and
             gassed or macerated in a grinder on their first days of life.
           </p>
-          <p>
+          <p className="flow-text">
             This isn’t well known, as these dairy industries work with the
             government to promote their product and hide the slaughter. Once I
             found out about this, I was left wondering what else was hidden from
@@ -158,18 +158,18 @@ const WhyVeganPage = () => {
       </div>
       <div className="section white">
         <div className="row container why-vegan">
-          <p>
+          <p className="flow-text">
             For those less concerned about the well-being of animals,
             considering we are in fact omnivores and one might call it “the
             circle of life”, we can think about our planet.
           </p>
-          <p>
+          <p className="flow-text">
             In October 2018, the intern governmental panel released a statement
             saying that in order to remain at or below the 1.5 degree celsius
             increase, greenhouse gas emission needed to be reduced by 45 percent
             before 2020, and net 0 by 2050.
           </p>
-          <p>
+          <p className="flow-text">
             Animal agriculture produces at least 14.5% of total greenhouse gas
             emissions, which is more than all forms of transportation combined,
             according to a 2016 study by the United States food and Agriculture
@@ -191,7 +191,7 @@ const WhyVeganPage = () => {
       </div>
       <div className="section white">
         <div className="row container why-vegan">
-          <p>
+          <p className="flow-text">
             Consuming these products is damaging our planet on the earth’s
             surface, in the sky, and in the ocean. It takes at least 2,000
             gallons of water to produce one pound of beef, so you technically
@@ -199,7 +199,7 @@ const WhyVeganPage = () => {
             months. Animal farming, including fish, is the number one cause of
             water pollution and our dying oceans.
           </p>
-          <p>
+          <p className="flow-text">
             Something more to think about is the amount of land it takes to not
             only hold animals, but to grow food to feed them. Currently two
             thirds of the land we use to grow crops is then fed to livestock
@@ -221,12 +221,12 @@ const WhyVeganPage = () => {
       </div>
       <div className="section white">
         <div className="row container why-vegan">
-          <p>
+          <p className="flow-text">
             On the other hand, if our ancestors had not hunted for food, we
             wouldn't be alive today. We need the milk for strong bones, and
             steak for its iron, right?
           </p>
-          <p>
+          <p className="flow-text">
             While eating animal products has kept our ancestors alive, it fell
             into the concept of necessity. The same way lions kill gazelles and
             sharks kill fish, our ancestors needed to hunt in order to live.
@@ -235,7 +235,7 @@ const WhyVeganPage = () => {
             Consequently, the harm we cause towards animals and the environment,
             as well as ourselves, is needless.
           </p>
-          <p>
+          <p className="flow-text">
             The American Dietetic Association, which is one of the largest
             bodies of nutrition professionals, has made the statement that a
             whole foods plant-based diet is “healthy, safe, and nutritionally
@@ -263,7 +263,7 @@ const WhyVeganPage = () => {
       </div>
       <div className="section white">
         <div className="row container why-vegan">
-          <p>
+          <p className="flow-text">
             As new information is coming out, more people are switching to a
             plant-based diet from finding out that the things we’re told growing
             up, the lies published by the media for profit are misleading and
@@ -271,7 +271,7 @@ const WhyVeganPage = () => {
             behind the scenes are supported by a government that works with the
             dairy industry and fast food companies.
           </p>
-          <p>
+          <p className="flow-text">
             People want change, and we’ve seen it over time. For example, stores
             have been using less plastic straws in an attempt to “save the
             turtles”, even though in reality the greatest polluter in our oceans
@@ -279,7 +279,7 @@ const WhyVeganPage = () => {
             an individual you can do your part, even if it takes time and is
             hard at first.
           </p>
-          <p>
+          <p className="flow-text">
             So, instead of asking ourselves, why vegan? Try asking yourself, why
             not vegan? What explanation is there for supporting an industry that
             is abusive towards others, damaging to our health and killing our

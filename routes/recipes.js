@@ -5,13 +5,14 @@ const Recipe = require('../models/Recipe');
 const RecipeIngredients = require('../models/RecipeIngredients');
 const Ingredient = require('../models/Ingredient');
 
-// @route - POST api/posts
+// @route - POST api/recipes
 // @desc - Create a recipe
 // @access - Private
 router.post('/', checkToken, async (req, res) => {
   const {
     name,
     category,
+    image,
     preparationTime,
     difficulty,
     instructions,
@@ -33,6 +34,7 @@ router.post('/', checkToken, async (req, res) => {
       source: req.userId,
       name,
       category,
+      image,
       preparationTime,
       difficulty,
       instructions,
@@ -62,8 +64,39 @@ router.post('/', checkToken, async (req, res) => {
 // @access  Public
 router.get('/', async (req, res) => {
   try {
-    const recipes = await Recipe.find().select('-__v').sort({ name: 1 });
-    res.json(recipes);
+    const recipes = await Recipe.find().sort({ name: 1 });
+    const recipeObjList = [];
+    for (let i = 0; i < recipes.length; i++) {
+      const recipeIngredients = await RecipeIngredients.find({
+        recipeId: recipes[i]._id,
+      }).populate({ path: 'ingredientId', select: '-__v' });
+      // create the recipe object to add to recipeObjList
+      const recipeObj = {
+        recipeId: recipes[i]._id,
+        name: recipes[i].name,
+        source: recipes[i].source,
+        category: recipes[i].category,
+        image: recipes[i].image,
+        preparationTime: recipes[i].preparationTime,
+        difficulty: recipes[i].difficulty,
+        servings: recipes[i].servings,
+        instructions: recipes[i].instructions,
+        note: recipes[i].note,
+        createdAt: recipes[i].createdAt,
+        ingredients: recipeIngredients.map((item) => {
+          return {
+            ingredientId: item.ingredientId._id,
+            name: item.ingredientId.name,
+            type: item.ingredientId.type,
+            description: item.ingredientId.description,
+            quantity: item.quantity,
+            note: item.note,
+          };
+        }),
+      };
+      recipeObjList.push(recipeObj);
+    }
+    res.json(recipeObjList);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -84,7 +117,7 @@ router.get('/:id', async (req, res) => {
     }).populate({ path: 'ingredientId', select: '-__v' });
     // create the recipe object to return to client
     const recipeObj = {
-      _id: recipe._id,
+      recipeId: recipe._id,
       name: recipe.name,
       source: recipe.source,
       category: recipe.category,
@@ -97,7 +130,7 @@ router.get('/:id', async (req, res) => {
       createdAt: recipe.createdAt,
       ingredients: recipeIngredients.map((item) => {
         return {
-          _id: item.ingredientId._id,
+          ingredientId: item.ingredientId._id,
           name: item.ingredientId.name,
           type: item.ingredientId.type,
           description: item.ingredientId.description,

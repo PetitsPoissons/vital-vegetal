@@ -2,13 +2,14 @@
 import React from 'react';
 
 // Components
+import RecipeList from '../recipes/RecipeList';
 
-const RecipePage = () => {
+const RecipesPage = () => {
   return (
     <div className="container" style={{ marginTop: '5rem' }}>
-      RECIPE
+      <RecipeList />
     </div>
   );
 };
 
-export default RecipePage;
+export default RecipesPage;
