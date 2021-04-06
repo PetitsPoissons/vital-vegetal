@@ -43,11 +43,18 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading, me } }) => {
     </>
   );
   const guestLinksMain = (
-    <li>
-      <Link to="/auth" className="grey-text text-darken-4">
-        Sign In / Up
-      </Link>
-    </li>
+    <ul id="nav-mobile" className="right hide-on-med-and-down">
+      <li>
+        <Link to="/why-vegan" className="grey-text text-darken-4">
+          Why vegan?
+        </Link>
+      </li>
+      <li>
+        <Link to="/recipes" className="grey-text text-darken-4">
+          Recipes
+        </Link>
+      </li>
+    </ul>
   );
   return (
     <>
@@ -89,9 +96,8 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading, me } }) => {
                 menu
               </i>
             </Link>
-            <ul id="nav-mobile" className="right hide-on-med-and-down">
-              {isAuthenticated ? authLinksMain : guestLinksMain}
-            </ul>
+
+            {isAuthenticated ? authLinksMain : guestLinksMain}
           </div>
           <div className="nav-wrapper" style={{ marginTop: '2rem' }}>
             <div className="center-align">
