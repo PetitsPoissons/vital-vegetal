@@ -1,9 +1,9 @@
 // React imports
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Redux imports
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchMe } from './actions/authActions';
 
@@ -18,12 +18,9 @@ import AuthPage from './components/pages/AuthPage';
 
 // Styles & Assets
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
@@ -72,6 +69,7 @@ const App = (props, { fetchMe }) => {
   return (
     <BrowserRouter>
       <CssBaseline />
+
       <Header />
       <Toolbar id="back-to-top-anchor" />
       <Switch>
