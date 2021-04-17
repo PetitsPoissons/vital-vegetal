@@ -17,13 +17,13 @@ import RecipePage from './components/pages/RecipePage';
 import AuthPage from './components/pages/AuthPage';
 
 // Styles & Assets
+import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
+import theme from './components/layout/Theme';
 import Toolbar from '@material-ui/core/Toolbar';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import Zoom from '@material-ui/core/Zoom';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Zoom from '@material-ui/core/Zoom';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,22 +68,22 @@ const App = (props, { fetchMe }) => {
   }, []);
   return (
     <BrowserRouter>
-      <CssBaseline />
-
-      <Header />
-      <Toolbar id="back-to-top-anchor" />
-      <Switch>
-        <Route exact path="/" component={HomePage}></Route>
-        <Route exact path="/why-vegan" component={WhyVeganPage}></Route>
-        <Route exact path="/recipes" component={RecipesPage}></Route>
-        <Route exact path="/recipe/:id" component={RecipePage}></Route>
-        <Route exact path="/auth" component={AuthPage}></Route>
-      </Switch>
-      <ScrollTop {...props}>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <Toolbar id="back-to-top-anchor" />
+        <Switch>
+          <Route exact path="/" component={HomePage}></Route>
+          <Route exact path="/why-vegan" component={WhyVeganPage}></Route>
+          <Route exact path="/recipes" component={RecipesPage}></Route>
+          <Route exact path="/recipe/:id" component={RecipePage}></Route>
+          <Route exact path="/auth" component={AuthPage}></Route>
+        </Switch>
+        <ScrollTop {...props}>
+          <Fab color="secondary" size="small" aria-label="scroll back to top">
+            <KeyboardArrowUpIcon />
+          </Fab>
+        </ScrollTop>
+      </ThemeProvider>
     </BrowserRouter>
   );
 };
