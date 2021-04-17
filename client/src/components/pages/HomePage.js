@@ -8,6 +8,7 @@ import React, { useEffect } from 'react';
 import M from 'materialize-css';
 import assiette5 from '../../assets/assiette5.jpeg';
 import lettuces2 from '../../assets/lettuces2.jpeg';
+// import vvLogoTransparentBg from '../../assets/vv-logo-transparentBg.svg';
 import vvLogoWhiteBg from '../../assets/vv-logo-whiteBg.jpg';
 
 const HomePage = () => {
