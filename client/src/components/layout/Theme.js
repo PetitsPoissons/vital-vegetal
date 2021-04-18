@@ -18,4 +18,16 @@ export default createMuiTheme({
       main: `${vvTurquoise}`,
     },
   },
+  typography: {
+    tab: {
+      fontFamily: 'Montserrat',
+      fontSize: '1rem',
+    },
+    login: {
+      fontFamily: 'Montserrat',
+      fontSize: '1rem',
+      textTransform: 'none',
+      color: 'white',
+    },
+  },
 });
