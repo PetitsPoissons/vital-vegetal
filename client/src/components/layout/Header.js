@@ -1,13 +1,12 @@
 // React imports
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // Styles & Assets
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Slide from '@material-ui/core/Slide';
@@ -21,13 +20,15 @@ const useStyles = makeStyles((theme) => ({
   navigationBar: {
     height: '13vh',
   },
-  // menuButton: {
-  //   marginRight: theme.spacing(2),
-  // },
+  logoContainer: {
+    marginTop: '3em',
+    padding: 0,
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+  },
   logo: {
-    paddingTop: '2em',
-    paddingBottom: '1em',
-    width: '20vw',
+    width: '22vw',
   },
   tabContainer: {
     marginLeft: 'auto',
@@ -35,14 +36,13 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     ...theme.typography.tab,
     minWidth: 10,
-    marginLeft: '25px',
+    marginLeft: theme.spacing(4),
   },
   button: {
     ...theme.typography.login,
     borderRadius: '50px',
-    marginLeft: '50px',
-    marginRight: '25px',
     height: '45px',
+    marginLeft: theme.spacing(6),
   },
 }));
 
@@ -60,42 +60,78 @@ function HideOnScroll(props) {
 export default function Header(props) {
   const classes = useStyles();
 
+  const [value, setValue] = useState(0);
+
+  const handleChange = (e, value) => {
+    setValue(value);
+  };
+
+  useEffect(() => {
+    if (window.location.pathname === '/' && value !== 0) {
+      setValue(0);
+    } else if (window.location.pathname === '/why-vegan' && value !== 1) {
+      setValue(1);
+    } else if (window.location.pathname === '/recipes' && value !== 2) {
+      setValue(2);
+    } else if (window.location.pathname === '/forum' && value !== 3) {
+      setValue(3);
+    }
+  }, [value]);
+
   return (
-    <>
-      <div className={classes.root}>
-        <HideOnScroll {...props}>
-          <AppBar
-            position="fixed"
-            color="white"
-            className={classes.navigationBar}
-          >
-            <Toolbar disableGutters>
-              {/* <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-              >
-                <MenuIcon />
-              </IconButton> */}
+    <div className={classes.root}>
+      <HideOnScroll {...props}>
+        <AppBar
+          position="fixed"
+          color="white"
+          className={classes.navigationBar}
+        >
+          <Toolbar>
+            <Button
+              component={Link}
+              to="/"
+              disableRipple
+              className={classes.logoContainer}
+              onClick={() => setValue(0)}
+            >
               <img alt="project logo" src={longLogo} className={classes.logo} />
-              {/* <Button color="inherit">Login</Button> */}
-              <Tabs className={classes.tabContainer}>
-                <Tab className={classes.tab} label="Why Vegan?" />
-                <Tab className={classes.tab} label="Recipes" />
-                <Tab className={classes.tab} label="Forum" />
-              </Tabs>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-              >
-                Sign In|Up
-              </Button>
-            </Toolbar>
-          </AppBar>
-        </HideOnScroll>
-      </div>
-    </>
+            </Button>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              className={classes.tabContainer}
+              indicatorColor="white"
+            >
+              <Tab className={classes.tab} component={Link} to="/" label="" />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/why-vegan"
+                label="Why Vegan?"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/recipes"
+                label="Recipes"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/forum"
+                label="Forum"
+              />
+            </Tabs>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+            >
+              Sign In|Up
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
+    </div>
   );
 }

@@ -67,8 +67,8 @@ const App = (props, { fetchMe }) => {
     }
   }, []);
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
         <Header />
         <Toolbar id="back-to-top-anchor" />
         <Switch>
@@ -76,6 +76,11 @@ const App = (props, { fetchMe }) => {
           <Route exact path="/why-vegan" component={WhyVeganPage}></Route>
           <Route exact path="/recipes" component={RecipesPage}></Route>
           <Route exact path="/recipe/:id" component={RecipePage}></Route>
+          <Route
+            exact
+            path="/forum"
+            component={() => <div>Forum in progress</div>}
+          ></Route>
           <Route exact path="/auth" component={AuthPage}></Route>
         </Switch>
         <ScrollTop {...props}>
@@ -83,8 +88,8 @@ const App = (props, { fetchMe }) => {
             <KeyboardArrowUpIcon />
           </Fab>
         </ScrollTop>
-      </ThemeProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 
