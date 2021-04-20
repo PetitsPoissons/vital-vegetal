@@ -20,6 +20,7 @@ const HomePage = () => {
   return (
     <>
       {/* <NavbarHome /> */}
+      <div className="section white"></div>
       <div className="parallax-container">
         <div className="parallax">
           <img src={assiette5} alt="Veggie Tartines" className="parallax-img" />

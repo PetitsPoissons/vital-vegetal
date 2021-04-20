@@ -9,6 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Slide from '@material-ui/core/Slide';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import longLogo from '../../assets/vvLogoLong.png';
@@ -61,9 +63,21 @@ export default function Header(props) {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e, value) => {
     setValue(value);
+  };
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+    setOpen(true);
+  };
+
+  const handleClose = (e) => {
+    setAnchorEl(null);
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -110,8 +124,11 @@ export default function Header(props) {
                 label="Why Vegan?"
               />
               <Tab
+                aria-owns={anchorEl ? 'recipes-menu' : undefined}
+                aria-haspopup={anchorEl ? 'true' : undefined}
                 className={classes.tab}
                 component={Link}
+                onMouseOver={(e) => handleClick(e)}
                 to="/recipes"
                 label="Recipes"
               />
@@ -129,6 +146,84 @@ export default function Header(props) {
             >
               Sign In|Up
             </Button>
+            <Menu
+              id="recipes-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{ onMouseLeave: handleClose }}
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setValue(2);
+                }}
+                component={Link}
+                to="/recipes"
+              >
+                Recipes
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setValue(2);
+                }}
+                component={Link}
+                to="/breakfasts"
+              >
+                Breakfasts
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setValue(2);
+                }}
+                component={Link}
+                to="/lunches"
+              >
+                Lunches
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setValue(2);
+                }}
+                component={Link}
+                to="/snacks"
+              >
+                Snacks
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setValue(2);
+                }}
+                component={Link}
+                to="/dinners"
+              >
+                Dinners
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setValue(2);
+                }}
+                component={Link}
+                to="/drinks"
+              >
+                Drinks
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setValue(2);
+                }}
+                component={Link}
+                to="/desserts"
+              >
+                Desserts
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </HideOnScroll>

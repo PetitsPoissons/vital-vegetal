@@ -21,6 +21,7 @@ const WhyVeganPage = () => {
 
   return (
     <>
+      <div className="section white"></div>
       <div className="parallax-container">
         <div className="parallax">
           <img
