@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   navigationBar: {
-    height: '13vh',
+    height: '12vh',
   },
   logoContainer: {
     marginTop: '3em',
@@ -46,6 +46,21 @@ const useStyles = makeStyles((theme) => ({
     height: '45px',
     marginLeft: theme.spacing(6),
   },
+  menuFirstItem: {
+    ...theme.typography.tab,
+    textTransform: 'uppercase',
+    opacity: 0.7,
+    '&:hover': {
+      opacity: 1,
+    },
+  },
+  menuItem: {
+    ...theme.typography.tab,
+    opacity: 0.7,
+    '&:hover': {
+      opacity: 1,
+    },
+  },
 }));
 
 function HideOnScroll(props) {
@@ -65,6 +80,7 @@ export default function Header(props) {
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleChange = (e, value) => {
     setValue(value);
@@ -75,20 +91,109 @@ export default function Header(props) {
     setOpen(true);
   };
 
+  const handleMenuItemClick = (e, idx) => {
+    setAnchorEl(null);
+    setOpen(false);
+    setSelectedIndex(idx);
+  };
+
   const handleClose = (e) => {
     setAnchorEl(null);
     setOpen(false);
   };
 
+  const menuOptions = [
+    {
+      name: 'Recipes',
+      link: '/recipes',
+    },
+    {
+      name: 'Breakfasts',
+      link: '/breakfasts',
+    },
+    {
+      name: 'Lunches',
+      link: '/lunches',
+    },
+    {
+      name: 'Snacks',
+      link: '/snacks',
+    },
+    {
+      name: 'Dinners',
+      link: '/dinners',
+    },
+    {
+      name: 'Drinks',
+      link: '/drinks',
+    },
+    {
+      name: 'Desserts',
+      link: '/desserts',
+    },
+  ];
+
   useEffect(() => {
-    if (window.location.pathname === '/' && value !== 0) {
-      setValue(0);
-    } else if (window.location.pathname === '/why-vegan' && value !== 1) {
-      setValue(1);
-    } else if (window.location.pathname === '/recipes' && value !== 2) {
-      setValue(2);
-    } else if (window.location.pathname === '/forum' && value !== 3) {
-      setValue(3);
+    switch (window.location.pathname) {
+      case '/':
+        if (value !== 0) {
+          setValue(0);
+        }
+        break;
+      case '/why-vegan':
+        if (value !== 1) {
+          setValue(1);
+        }
+        break;
+      case '/recipes':
+        if (value !== 2) {
+          setValue(2);
+          setSelectedIndex(0);
+        }
+        break;
+      case '/breakfasts':
+        if (value !== 2) {
+          setValue(2);
+          setSelectedIndex(1);
+        }
+        break;
+      case '/lunches':
+        if (value !== 2) {
+          setValue(2);
+          setSelectedIndex(2);
+        }
+        break;
+      case '/snacks':
+        if (value !== 2) {
+          setValue(2);
+          setSelectedIndex(3);
+        }
+        break;
+      case '/dinners':
+        if (value !== 2) {
+          setValue(2);
+          setSelectedIndex(4);
+        }
+        break;
+      case '/drinks':
+        if (value !== 2) {
+          setValue(2);
+          setSelectedIndex(5);
+        }
+        break;
+      case '/desserts':
+        if (value !== 2) {
+          setValue(2);
+          setSelectedIndex(6);
+        }
+        break;
+      case '/forum':
+        if (value !== 3) {
+          setValue(3);
+        }
+        break;
+      default:
+        break;
     }
   }, [value]);
 
@@ -99,6 +204,7 @@ export default function Header(props) {
           position="fixed"
           color="white"
           className={classes.navigationBar}
+          elevation={0}
         >
           <Toolbar>
             <Button
@@ -154,77 +260,29 @@ export default function Header(props) {
               open={open}
               onClose={handleClose}
               MenuListProps={{ onMouseLeave: handleClose }}
+              elevation={0}
             >
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setValue(2);
-                }}
-                component={Link}
-                to="/recipes"
-              >
-                Recipes
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setValue(2);
-                }}
-                component={Link}
-                to="/breakfasts"
-              >
-                Breakfasts
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setValue(2);
-                }}
-                component={Link}
-                to="/lunches"
-              >
-                Lunches
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setValue(2);
-                }}
-                component={Link}
-                to="/snacks"
-              >
-                Snacks
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setValue(2);
-                }}
-                component={Link}
-                to="/dinners"
-              >
-                Dinners
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setValue(2);
-                }}
-                component={Link}
-                to="/drinks"
-              >
-                Drinks
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setValue(2);
-                }}
-                component={Link}
-                to="/desserts"
-              >
-                Desserts
-              </MenuItem>
+              {menuOptions.map((option, idx) => {
+                return (
+                  <MenuItem
+                    key={option}
+                    component={Link}
+                    to={option.link}
+                    classes={{
+                      root:
+                        idx === 0 ? classes.menuFirstItem : classes.menuItem,
+                    }}
+                    onClick={(e) => {
+                      handleMenuItemClick(e, idx);
+                      handleClose();
+                      setValue(2);
+                    }}
+                    selected={idx === selectedIndex && value === 2}
+                  >
+                    {option.name}
+                  </MenuItem>
+                );
+              })}
             </Menu>
           </Toolbar>
         </AppBar>
