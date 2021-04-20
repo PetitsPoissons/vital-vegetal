@@ -140,6 +140,8 @@ export default function Header(props) {
               />
             </Tabs>
             <Button
+              component={Link}
+              to="/auth"
               variant="contained"
               color="secondary"
               className={classes.button}
