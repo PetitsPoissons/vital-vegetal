@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // Styles & Assets
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -125,7 +125,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -181,6 +182,78 @@ export default function Header(props) {
       link: '/desserts',
     },
   ];
+
+  const tabs = (
+    <>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        className={classes.tabContainer}
+        indicatorColor="white"
+      >
+        <Tab className={classes.tab} component={Link} to="/" label="" />
+        <Tab
+          className={classes.tab}
+          component={Link}
+          to="/why-vegan"
+          label="Why Vegan?"
+        />
+        <Tab
+          aria-owns={anchorEl ? 'recipes-menu' : undefined}
+          aria-haspopup={anchorEl ? 'true' : undefined}
+          className={classes.tab}
+          component={Link}
+          onMouseOver={(e) => handleClick(e)}
+          to="/recipes"
+          label="Recipes"
+        />
+        <Tab
+          className={classes.tab}
+          component={Link}
+          to="/forum"
+          label="Forum"
+        />
+      </Tabs>
+      <Button
+        component={Link}
+        to="/auth"
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+      >
+        Sign In|Up
+      </Button>
+      <Menu
+        id="recipes-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{ onMouseLeave: handleClose }}
+        elevation={0}
+      >
+        {menuOptions.map((option, idx) => {
+          return (
+            <MenuItem
+              key={option}
+              component={Link}
+              to={option.link}
+              classes={{
+                root: idx === 0 ? classes.menuFirstItem : classes.menuItem,
+              }}
+              onClick={(e) => {
+                handleMenuItemClick(e, idx);
+                handleClose();
+                setValue(2);
+              }}
+              selected={idx === selectedIndex && value === 2}
+            >
+              {option.name}
+            </MenuItem>
+          );
+        })}
+      </Menu>
+    </>
+  );
 
   useEffect(() => {
     switch (window.location.pathname) {
@@ -265,74 +338,7 @@ export default function Header(props) {
             >
               <img alt="project logo" src={longLogo} className={classes.logo} />
             </Button>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              className={classes.tabContainer}
-              indicatorColor="white"
-            >
-              <Tab className={classes.tab} component={Link} to="/" label="" />
-              <Tab
-                className={classes.tab}
-                component={Link}
-                to="/why-vegan"
-                label="Why Vegan?"
-              />
-              <Tab
-                aria-owns={anchorEl ? 'recipes-menu' : undefined}
-                aria-haspopup={anchorEl ? 'true' : undefined}
-                className={classes.tab}
-                component={Link}
-                onMouseOver={(e) => handleClick(e)}
-                to="/recipes"
-                label="Recipes"
-              />
-              <Tab
-                className={classes.tab}
-                component={Link}
-                to="/forum"
-                label="Forum"
-              />
-            </Tabs>
-            <Button
-              component={Link}
-              to="/auth"
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-            >
-              Sign In|Up
-            </Button>
-            <Menu
-              id="recipes-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{ onMouseLeave: handleClose }}
-              elevation={0}
-            >
-              {menuOptions.map((option, idx) => {
-                return (
-                  <MenuItem
-                    key={option}
-                    component={Link}
-                    to={option.link}
-                    classes={{
-                      root:
-                        idx === 0 ? classes.menuFirstItem : classes.menuItem,
-                    }}
-                    onClick={(e) => {
-                      handleMenuItemClick(e, idx);
-                      handleClose();
-                      setValue(2);
-                    }}
-                    selected={idx === selectedIndex && value === 2}
-                  >
-                    {option.name}
-                  </MenuItem>
-                );
-              })}
-            </Menu>
+            {matches ? null : tabs}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
