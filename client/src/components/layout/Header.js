@@ -8,13 +8,15 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Slide from '@material-ui/core/Slide';
-
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import longLogo from '../../assets/vvLogoLong.png';
 
 function HideOnScroll(props) {
@@ -32,8 +34,19 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  offset: {
+    [theme.breakpoints.up('lg')]: {
+      height: '10rem',
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      height: '7.5rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      height: '6.2rem',
+    },
+  },
   navigationBar: {
-    backgroundImage: 'linear-gradient(white, transparent)',
+    backgroundColor: 'transparent',
     [theme.breakpoints.up('lg')]: {
       height: '10rem',
     },
@@ -121,35 +134,51 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
+  drawerIconContainer: {
+    marginLeft: 'auto',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    '&:focus': {
+      backgroundColor: 'transparent',
+    },
+  },
+  drawerIcon: {
+    height: '4rem',
+    width: '4rem',
+  },
 }));
 
 export default function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleChange = (e, value) => {
-    setValue(value);
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
   };
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
-    setOpen(true);
+    setOpenMenu(true);
   };
 
   const handleMenuItemClick = (e, idx) => {
     setAnchorEl(null);
-    setOpen(false);
+    setOpenMenu(false);
     setSelectedIndex(idx);
   };
 
   const handleClose = (e) => {
     setAnchorEl(null);
-    setOpen(false);
+    setOpenMenu(false);
   };
 
   const menuOptions = [
@@ -182,78 +211,6 @@ export default function Header(props) {
       link: '/desserts',
     },
   ];
-
-  const tabs = (
-    <>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        className={classes.tabContainer}
-        indicatorColor="white"
-      >
-        <Tab className={classes.tab} component={Link} to="/" label="" />
-        <Tab
-          className={classes.tab}
-          component={Link}
-          to="/why-vegan"
-          label="Why Vegan?"
-        />
-        <Tab
-          aria-owns={anchorEl ? 'recipes-menu' : undefined}
-          aria-haspopup={anchorEl ? 'true' : undefined}
-          className={classes.tab}
-          component={Link}
-          onMouseOver={(e) => handleClick(e)}
-          to="/recipes"
-          label="Recipes"
-        />
-        <Tab
-          className={classes.tab}
-          component={Link}
-          to="/forum"
-          label="Forum"
-        />
-      </Tabs>
-      <Button
-        component={Link}
-        to="/auth"
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-      >
-        Sign In|Up
-      </Button>
-      <Menu
-        id="recipes-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{ onMouseLeave: handleClose }}
-        elevation={0}
-      >
-        {menuOptions.map((option, idx) => {
-          return (
-            <MenuItem
-              key={option}
-              component={Link}
-              to={option.link}
-              classes={{
-                root: idx === 0 ? classes.menuFirstItem : classes.menuItem,
-              }}
-              onClick={(e) => {
-                handleMenuItemClick(e, idx);
-                handleClose();
-                setValue(2);
-              }}
-              selected={idx === selectedIndex && value === 2}
-            >
-              {option.name}
-            </MenuItem>
-          );
-        })}
-      </Menu>
-    </>
-  );
 
   useEffect(() => {
     switch (window.location.pathname) {
@@ -319,11 +276,104 @@ export default function Header(props) {
     }
   }, [value]);
 
+  const tabs = (
+    <>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        className={classes.tabContainer}
+        indicatorColor="white"
+      >
+        <Tab className={classes.tab} component={Link} to="/" label="" />
+        <Tab
+          className={classes.tab}
+          component={Link}
+          to="/why-vegan"
+          label="Why Vegan?"
+        />
+        <Tab
+          aria-owns={anchorEl ? 'recipes-menu' : undefined}
+          aria-haspopup={anchorEl ? 'true' : undefined}
+          className={classes.tab}
+          component={Link}
+          onMouseOver={(e) => handleClick(e)}
+          to="/recipes"
+          label="Recipes"
+        />
+        <Tab
+          className={classes.tab}
+          component={Link}
+          to="/forum"
+          label="Forum"
+        />
+      </Tabs>
+      <Button
+        component={Link}
+        to="/auth"
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+      >
+        Sign In|Up
+      </Button>
+      <Menu
+        id="recipes-menu"
+        anchorEl={anchorEl}
+        open={openMenu}
+        onClose={handleClose}
+        MenuListProps={{ onMouseLeave: handleClose }}
+        elevation={0}
+      >
+        {menuOptions.map((option, idx) => {
+          return (
+            <MenuItem
+              key={option}
+              component={Link}
+              to={option.link}
+              classes={{
+                root: idx === 0 ? classes.menuFirstItem : classes.menuItem,
+              }}
+              onClick={(e) => {
+                handleMenuItemClick(e, idx);
+                handleClose();
+                setValue(2);
+              }}
+              selected={idx === selectedIndex && value === 2}
+            >
+              {option.name}
+            </MenuItem>
+          );
+        })}
+      </Menu>
+    </>
+  );
+
+  const drawer = (
+    <>
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        onOpen={() => setOpenDrawer(true)}
+      >
+        Example Drawer
+      </SwipeableDrawer>
+      <IconButton
+        className={classes.drawerIconContainer}
+        onClick={() => setOpenDrawer(!openDrawer)}
+        disableRipple
+      >
+        <MenuIcon className={classes.drawerIcon} />
+      </IconButton>
+    </>
+  );
+
   return (
     <div className={classes.root}>
       <HideOnScroll {...props}>
         <AppBar
-          position="static"
+          position="fixed"
           color="white"
           className={classes.navigationBar}
           elevation={0}
@@ -338,10 +388,11 @@ export default function Header(props) {
             >
               <img alt="project logo" src={longLogo} className={classes.logo} />
             </Button>
-            {matches ? null : tabs}
+            {matches ? drawer : tabs}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
+      <div className={classes.offset} />
     </div>
   );
 }

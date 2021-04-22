@@ -9,7 +9,8 @@ export default createMuiTheme({
   mixins: {
     toolbar: {
       minHeight: 0,
-      backgroundColor: 'transparent',
+      // backgroundColor: 'transparent',
+      backgroundImage: 'linear-gradient(white 90%, transparent 92%)',
     },
   },
   palette: {
