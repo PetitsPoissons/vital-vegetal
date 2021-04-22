@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // Styles & Assets
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,25 +14,61 @@ import Tab from '@material-ui/core/Tab';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Slide from '@material-ui/core/Slide';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+
 import longLogo from '../../assets/vvLogoLong.png';
+
+function HideOnScroll(props) {
+  const { children } = props;
+  const trigger = useScrollTrigger();
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   navigationBar: {
-    height: '12vh',
+    backgroundImage: 'linear-gradient(white, transparent)',
+    [theme.breakpoints.up('lg')]: {
+      height: '10rem',
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      height: '7.5rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      height: '6.2rem',
+    },
   },
   logoContainer: {
-    marginTop: '3em',
     padding: 0,
     '&:hover': {
       backgroundColor: 'transparent',
     },
+    [theme.breakpoints.up('lg')]: {
+      marginTop: '4rem',
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      marginTop: '3rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: '2.2rem',
+    },
   },
   logo: {
-    width: '22vw',
+    [theme.breakpoints.up('lg')]: {
+      width: '30rem',
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      width: '22rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '18rem',
+    },
   },
   tabContainer: {
     marginLeft: 'auto',
@@ -38,13 +76,35 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     ...theme.typography.tab,
     minWidth: 10,
-    marginLeft: theme.spacing(4),
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '20rem',
+      marginLeft: theme.spacing(4),
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      fontSize: '8rem',
+      marginLeft: theme.spacing(3),
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1rem',
+      marginLeft: theme.spacing(2),
+    },
   },
   button: {
     ...theme.typography.login,
     borderRadius: '50px',
     height: '45px',
-    marginLeft: theme.spacing(6),
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '20rem',
+      marginLeft: theme.spacing(6),
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      fontSize: '10rem',
+      marginLeft: theme.spacing(5),
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1rem',
+      marginLeft: theme.spacing(4),
+    },
   },
   menuFirstItem: {
     ...theme.typography.tab,
@@ -62,17 +122,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-function HideOnScroll(props) {
-  const { children } = props;
-  const trigger = useScrollTrigger();
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
 
 export default function Header(props) {
   const classes = useStyles();
@@ -201,7 +250,7 @@ export default function Header(props) {
     <div className={classes.root}>
       <HideOnScroll {...props}>
         <AppBar
-          position="fixed"
+          position="static"
           color="white"
           className={classes.navigationBar}
           elevation={0}

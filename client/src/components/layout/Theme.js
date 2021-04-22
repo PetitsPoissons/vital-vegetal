@@ -6,6 +6,12 @@ const vvTurquoise = '#23bad5';
 const vvWhite = '#000';
 
 export default createMuiTheme({
+  mixins: {
+    toolbar: {
+      minHeight: 0,
+      backgroundColor: 'transparent',
+    },
+  },
   palette: {
     common: {
       dkGreen: `${vvDarkGreen}`,
