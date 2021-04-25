@@ -163,9 +163,6 @@ const useStyles = makeStyles((theme) => ({
     height: '4rem',
     width: '4rem',
   },
-  // drawer: {
-  //   backgroundColor: theme.palette.common.white,
-  // },
   drawerItem: {
     ...theme.typography.tab,
     opacity: 0.7,
@@ -189,7 +186,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
-  console.log('props', props);
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
@@ -289,96 +285,93 @@ const Header = (props) => {
     {
       name: 'Recipes',
       link: '/recipes',
+      activeIndex: 2,
+      selectedIndex: 0,
     },
     {
       name: 'Breakfasts',
       link: '/breakfasts',
+      activeIndex: 2,
+      selectedIndex: 1,
     },
     {
       name: 'Lunches',
       link: '/lunches',
+      activeIndex: 2,
+      selectedIndex: 2,
     },
     {
       name: 'Snacks',
       link: '/snacks',
+      activeIndex: 2,
+      selectedIndex: 3,
     },
     {
       name: 'Dinners',
       link: '/dinners',
+      activeIndex: 2,
+      selectedIndex: 4,
     },
     {
       name: 'Drinks',
       link: '/drinks',
+      activeIndex: 2,
+      selectedIndex: 5,
     },
     {
       name: 'Desserts',
       link: '/desserts',
+      activeIndex: 2,
+      selectedIndex: 6,
+    },
+  ];
+
+  const routes = [
+    {
+      name: '',
+      link: '/',
+      activeIndex: 0,
+      drawerName: 'Home',
+      drawerIcon: <HomeOutlinedIcon />,
+    },
+    {
+      name: 'Why Vegan?',
+      link: '/why-vegan',
+      activeIndex: 1,
+      drawerName: 'Why Vegan?',
+      drawerIcon: <HelpOutlineOutlinedIcon />,
+    },
+    {
+      name: 'Recipes',
+      link: '/recipes',
+      activeIndex: 2,
+      drawerName: 'Recipes',
+      drawerIcon: <MenuBookOutlinedIcon />,
+      ariaOwns: anchorEl ? 'recipes-menu' : undefined,
+      ariaPopup: anchorEl ? 'true' : undefined,
+      mouseOver: (e) => handleClick(e),
+    },
+    {
+      name: 'Forum',
+      link: '/forum',
+      activeIndex: 3,
+      drawerName: 'Forum',
+      drawerIcon: <ForumOutlinedIcon />,
     },
   ];
 
   useEffect(() => {
-    switch (window.location.pathname) {
-      case '/':
-        if (value !== 0) {
-          setValue(0);
+    [...menuOptions, ...routes].forEach((route) => {
+      if (window.location.pathname === `${route.link}`) {
+        if (value !== route.activeIndex) {
+          setValue(route.activeIndex);
         }
-        break;
-      case '/why-vegan':
-        if (value !== 1) {
-          setValue(1);
+        if (route.selectedIndex && route.selectedIndex !== selectedIndex) {
+          setSelectedIndex(route.selectedIndex);
         }
-        break;
-      case '/recipes':
-        if (value !== 2) {
-          setValue(2);
-          setSelectedIndex(0);
-        }
-        break;
-      case '/breakfasts':
-        if (value !== 2) {
-          setValue(2);
-          setSelectedIndex(1);
-        }
-        break;
-      case '/lunches':
-        if (value !== 2) {
-          setValue(2);
-          setSelectedIndex(2);
-        }
-        break;
-      case '/snacks':
-        if (value !== 2) {
-          setValue(2);
-          setSelectedIndex(3);
-        }
-        break;
-      case '/dinners':
-        if (value !== 2) {
-          setValue(2);
-          setSelectedIndex(4);
-        }
-        break;
-      case '/drinks':
-        if (value !== 2) {
-          setValue(2);
-          setSelectedIndex(5);
-        }
-        break;
-      case '/desserts':
-        if (value !== 2) {
-          setValue(2);
-          setSelectedIndex(6);
-        }
-        break;
-      case '/forum':
-        if (value !== 3) {
-          setValue(3);
-        }
-        break;
-      default:
-        break;
-    }
-  }, [value]);
+      }
+    });
+  }, [value, menuOptions, routes, selectedIndex]);
 
   const tabs = (
     <>
@@ -388,28 +381,18 @@ const Header = (props) => {
         className={classes.tabContainer}
         indicatorColor="white"
       >
-        <Tab className={classes.tab} component={Link} to="/" label="" />
-        <Tab
-          className={classes.tab}
-          component={Link}
-          to="/why-vegan"
-          label="Why Vegan?"
-        />
-        <Tab
-          aria-owns={anchorEl ? 'recipes-menu' : undefined}
-          aria-haspopup={anchorEl ? 'true' : undefined}
-          className={classes.tab}
-          component={Link}
-          onMouseOver={(e) => handleClick(e)}
-          to="/recipes"
-          label="Recipes"
-        />
-        <Tab
-          className={classes.tab}
-          component={Link}
-          to="/forum"
-          label="Forum"
-        />
+        {routes.map((route, idx) => (
+          <Tab
+            key={`${route}${idx}`}
+            className={classes.tab}
+            component={Link}
+            to={route.link}
+            label={route.name}
+            aria-owns={route.ariaOwns}
+            aria-haspopup={route.ariaPopup}
+            onMouseOver={route.mouseOver}
+          />
+        ))}
       </Tabs>
       {props.auth.isAuthenticated ? authMainButton : guestMainButton}
       <Menu
@@ -419,6 +402,7 @@ const Header = (props) => {
         onClose={handleClose}
         MenuListProps={{ onMouseLeave: handleClose }}
         elevation={0}
+        keepMounted
       >
         {menuOptions.map((option, idx) => {
           return (
@@ -454,102 +438,31 @@ const Header = (props) => {
         onOpen={() => setOpenDrawer(true)}
       >
         <List disablePadding>
-          <ListItem
-            button
-            component={Link}
-            to="/"
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(0);
-            }}
-            selected={value === 0}
-          >
-            <ListItemIcon>
-              <HomeOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              className={
-                value === 0
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
+          {routes.map((route) => (
+            <ListItem
+              key={`${route}${route.activeIndex}`}
+              button
+              component={Link}
+              to={route.link}
+              onClick={() => {
+                setOpenDrawer(false);
+                setValue(route.activeIndex);
+              }}
+              selected={value === route.activeIndex}
             >
-              Home
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/why-vegan"
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(1);
-            }}
-            selected={value === 1}
-          >
-            <ListItemIcon>
-              <HelpOutlineOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              className={
-                value === 1
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-            >
-              Why Vegan?
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/recipes"
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(2);
-            }}
-            selected={value === 2}
-          >
-            <ListItemIcon>
-              <MenuBookOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              className={
-                value === 2
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-            >
-              Recipes
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/forum"
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(3);
-            }}
-            selected={value === 3}
-          >
-            <ListItemIcon>
-              <ForumOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              className={
-                value === 3
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-            >
-              Forum
-            </ListItemText>
-          </ListItem>
+              <ListItemIcon>{route.drawerIcon}</ListItemIcon>
+              <ListItemText
+                disableTypography
+                className={
+                  value === route.activeIndex
+                    ? [classes.drawerItem, classes.drawerItemSelected]
+                    : classes.drawerItem
+                }
+              >
+                {route.drawerName}
+              </ListItemText>
+            </ListItem>
+          ))}
           {props.auth.isAuthenticated ? authDrawerItem : guestDrawerItem}
         </List>
       </SwipeableDrawer>
