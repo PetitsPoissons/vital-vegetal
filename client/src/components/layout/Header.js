@@ -1,6 +1,11 @@
 // React imports
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+// Redux imports
+import { connect } from 'react-redux';
+import { logout } from '../../actions/authActions';
 
 // Styles & Assets
 import longLogo from '../../assets/vvLogoLong.png';
@@ -30,6 +35,7 @@ import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 function HideOnScroll(props) {
+  // console.log('props', props);
   const { children } = props;
   const trigger = useScrollTrigger();
 
@@ -182,7 +188,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header(props) {
+const Header = (props) => {
+  console.log('props', props);
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
@@ -213,6 +220,70 @@ export default function Header(props) {
     setAnchorEl(null);
     setOpenMenu(false);
   };
+
+  const authMainButton = (
+    <Button
+      component={Link}
+      to="/"
+      variant="contained"
+      color="secondary"
+      className={classes.button}
+      onClick={props.logout}
+    >
+      Sign Out
+    </Button>
+  );
+
+  const guestMainButton = (
+    <Button
+      component={Link}
+      to="/auth"
+      variant="contained"
+      color="secondary"
+      className={classes.button}
+    >
+      Sign In|Up
+    </Button>
+  );
+
+  const authDrawerItem = (
+    <ListItem
+      divider
+      button
+      component={Link}
+      to="/"
+      className={classes.drawerItemAuth}
+      onClick={() => {
+        setOpenDrawer(false);
+        props.logout();
+      }}
+    >
+      <ListItemIcon>
+        <LockOutlinedIcon className={classes.drawerItemAuthIcon} />
+      </ListItemIcon>
+      <ListItemText disableTypography className={classes.drawerItemAuthText}>
+        Sign Out
+      </ListItemText>
+    </ListItem>
+  );
+
+  const guestDrawerItem = (
+    <ListItem
+      divider
+      button
+      component={Link}
+      to="/auth"
+      className={classes.drawerItemAuth}
+      onClick={() => setOpenDrawer(false)}
+    >
+      <ListItemIcon>
+        <LockOpenRoundedIcon className={classes.drawerItemAuthIcon} />
+      </ListItemIcon>
+      <ListItemText disableTypography className={classes.drawerItemAuthText}>
+        Sign In|Up
+      </ListItemText>
+    </ListItem>
+  );
 
   const menuOptions = [
     {
@@ -340,15 +411,7 @@ export default function Header(props) {
           label="Forum"
         />
       </Tabs>
-      <Button
-        component={Link}
-        to="/auth"
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-      >
-        Sign In|Up
-      </Button>
+      {props.auth.isAuthenticated ? authMainButton : guestMainButton}
       <Menu
         id="recipes-menu"
         anchorEl={anchorEl}
@@ -487,24 +550,7 @@ export default function Header(props) {
               Forum
             </ListItemText>
           </ListItem>
-          <ListItem
-            divider
-            button
-            component={Link}
-            to="/auth"
-            className={classes.drawerItemAuth}
-            onClick={() => setOpenDrawer(false)}
-          >
-            <ListItemIcon>
-              <LockOpenRoundedIcon className={classes.drawerItemAuthIcon} />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              className={classes.drawerItemAuthText}
-            >
-              Sign In|Up
-            </ListItemText>
-          </ListItem>
+          {props.auth.isAuthenticated ? authDrawerItem : guestDrawerItem}
         </List>
       </SwipeableDrawer>
       <IconButton
@@ -543,4 +589,15 @@ export default function Header(props) {
       <div className={classes.offset} />
     </div>
   );
-}
+};
+
+Header.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(Header);
