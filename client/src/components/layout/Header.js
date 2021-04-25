@@ -157,14 +157,21 @@ const useStyles = makeStyles((theme) => ({
     height: '4rem',
     width: '4rem',
   },
-  drawer: {
-    backgroundColor: theme.palette.common.white,
-  },
+  // drawer: {
+  //   backgroundColor: theme.palette.common.white,
+  // },
   drawerItem: {
     ...theme.typography.tab,
+    opacity: 0.7,
+  },
+  drawerItemSelected: {
+    opacity: 1,
   },
   drawerItemAuth: {
     backgroundColor: theme.palette.common.turquoise,
+    '&:hover': {
+      backgroundColor: theme.palette.common.dkBlueGrey,
+    },
   },
   drawerItemAuthIcon: {
     color: 'white',
@@ -388,12 +395,23 @@ export default function Header(props) {
             button
             component={Link}
             to="/"
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(0);
+            }}
+            selected={value === 0}
           >
             <ListItemIcon>
               <HomeOutlinedIcon />
             </ListItemIcon>
-            <ListItemText disableTypography className={classes.drawerItem}>
+            <ListItemText
+              disableTypography
+              className={
+                value === 0
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+            >
               Home
             </ListItemText>
           </ListItem>
@@ -401,12 +419,23 @@ export default function Header(props) {
             button
             component={Link}
             to="/why-vegan"
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(1);
+            }}
+            selected={value === 1}
           >
             <ListItemIcon>
               <HelpOutlineOutlinedIcon />
             </ListItemIcon>
-            <ListItemText disableTypography className={classes.drawerItem}>
+            <ListItemText
+              disableTypography
+              className={
+                value === 1
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+            >
               Why Vegan?
             </ListItemText>
           </ListItem>
@@ -414,12 +443,23 @@ export default function Header(props) {
             button
             component={Link}
             to="/recipes"
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(2);
+            }}
+            selected={value === 2}
           >
             <ListItemIcon>
               <MenuBookOutlinedIcon />
             </ListItemIcon>
-            <ListItemText disableTypography className={classes.drawerItem}>
+            <ListItemText
+              disableTypography
+              className={
+                value === 2
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+            >
               Recipes
             </ListItemText>
           </ListItem>
@@ -427,12 +467,23 @@ export default function Header(props) {
             button
             component={Link}
             to="/forum"
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(3);
+            }}
+            selected={value === 3}
           >
             <ListItemIcon>
               <ForumOutlinedIcon />
             </ListItemIcon>
-            <ListItemText disableTypography className={classes.drawerItem}>
+            <ListItemText
+              disableTypography
+              className={
+                value === 3
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+            >
               Forum
             </ListItemText>
           </ListItem>

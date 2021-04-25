@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const vvDarkGreen = '#307c3b';
 const vvLightGreen = '#9fdd56';
 const vvTurquoise = '#23bad5';
-const vvWhite = '#000';
+const vvDarkBlueGrey = '#607d8b';
 
 export default createMuiTheme({
   mixins: {
@@ -18,7 +18,7 @@ export default createMuiTheme({
       dkGreen: `${vvDarkGreen}`,
       ltGreen: `${vvLightGreen}`,
       turquoise: `${vvTurquoise}`,
-      white: `${vvWhite}`,
+      dkBlueGrey: `${vvDarkBlueGrey}`,
     },
     primary: {
       main: `${vvDarkGreen}`,
