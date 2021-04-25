@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // Styles & Assets
+import longLogo from '../../assets/vvLogoLong.png';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -17,7 +18,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import longLogo from '../../assets/vvLogoLong.png';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import MenuBookOutlinedIcon from '@material-ui/icons/MenuBookOutlined';
+import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
+import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -146,6 +156,22 @@ const useStyles = makeStyles((theme) => ({
   drawerIcon: {
     height: '4rem',
     width: '4rem',
+  },
+  drawer: {
+    backgroundColor: theme.palette.common.white,
+  },
+  drawerItem: {
+    ...theme.typography.tab,
+  },
+  drawerItemAuth: {
+    backgroundColor: theme.palette.common.turquoise,
+  },
+  drawerItemAuthIcon: {
+    color: 'white',
+  },
+  drawerItemAuthText: {
+    ...theme.typography.tab,
+    color: 'white',
   },
 }));
 
@@ -357,7 +383,78 @@ export default function Header(props) {
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
       >
-        Example Drawer
+        <List disablePadding>
+          <ListItem
+            button
+            component={Link}
+            to="/"
+            onClick={() => setOpenDrawer(false)}
+          >
+            <ListItemIcon>
+              <HomeOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText disableTypography className={classes.drawerItem}>
+              Home
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to="/why-vegan"
+            onClick={() => setOpenDrawer(false)}
+          >
+            <ListItemIcon>
+              <HelpOutlineOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText disableTypography className={classes.drawerItem}>
+              Why Vegan?
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to="/recipes"
+            onClick={() => setOpenDrawer(false)}
+          >
+            <ListItemIcon>
+              <MenuBookOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText disableTypography className={classes.drawerItem}>
+              Recipes
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to="/forum"
+            onClick={() => setOpenDrawer(false)}
+          >
+            <ListItemIcon>
+              <ForumOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText disableTypography className={classes.drawerItem}>
+              Forum
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            divider
+            button
+            component={Link}
+            to="/auth"
+            className={classes.drawerItemAuth}
+            onClick={() => setOpenDrawer(false)}
+          >
+            <ListItemIcon>
+              <LockOpenRoundedIcon className={classes.drawerItemAuthIcon} />
+            </ListItemIcon>
+            <ListItemText
+              disableTypography
+              className={classes.drawerItemAuthText}
+            >
+              Sign In|Up
+            </ListItemText>
+          </ListItem>
+        </List>
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
