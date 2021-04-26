@@ -6,9 +6,10 @@ import React, { useEffect } from 'react';
 
 // Style & Images
 import M from 'materialize-css';
-import assiette5 from '../../assets/assiette5.jpeg';
-import lettuces2 from '../../assets/lettuces2.jpeg';
-import vvLogoWhiteBg from '../../assets/vv-logo-whiteBg.jpg';
+import assiette5 from '../../assets/assiette5.png';
+import lettuces2 from '../../assets/lettuces2.png';
+import vvLogoTransparentBg from '../../assets/vv-logo-transparentBg-500.png';
+// import vvLogoWhiteBg from '../../assets/vv-logo-whiteBg.jpg';
 
 const HomePage = () => {
   useEffect(() => {
@@ -19,6 +20,7 @@ const HomePage = () => {
   return (
     <>
       {/* <NavbarHome /> */}
+      {/* <div className="section white"></div> */}
       <div className="parallax-container">
         <div className="parallax">
           <img src={assiette5} alt="Veggie Tartines" className="parallax-img" />
@@ -28,7 +30,7 @@ const HomePage = () => {
         <div className="row container valign-wrapper">
           <div className="col s4">
             <img
-              src={vvLogoWhiteBg}
+              src={vvLogoTransparentBg}
               alt="Vital Vegetal Logo"
               className="center-align"
             />

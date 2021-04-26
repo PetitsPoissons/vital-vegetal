@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 
 // Style & Images
 import M from 'materialize-css';
-import vegan from '../../assets/vegan.jpeg';
-import cows1 from '../../assets/cows1.jpeg';
-import factoryFarming1 from '../../assets/factory-farming1.jpeg';
-import factoryFarming2 from '../../assets/hog-farm2.jpeg';
+import vegan from '../../assets/vegan.png';
+import cows1 from '../../assets/cows1.png';
+import factoryFarming1 from '../../assets/factory-farming1.png';
+import factoryFarming2 from '../../assets/hog-farm2.png';
 import methaneEmissions from '../../assets/methane-emissions.png';
-import waterPollution from '../../assets/water-pollution.jpeg';
-import lettuces1 from '../../assets/lettuces1.jpeg';
-import oneWorld from '../../assets/one-world.jpeg';
+import waterPollution from '../../assets/water-pollution.png';
+import lettuces1 from '../../assets/lettuces1.png';
+import oneWorld from '../../assets/one-world.png';
 
 const WhyVeganPage = () => {
   useEffect(() => {
@@ -21,6 +21,7 @@ const WhyVeganPage = () => {
 
   return (
     <>
+      {/* <div className="section white"></div> */}
       <div className="parallax-container">
         <div className="parallax">
           <img
