@@ -27,12 +27,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Collapse from '@material-ui/core/Collapse';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import MenuBookOutlinedIcon from '@material-ui/icons/MenuBookOutlined';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 function HideOnScroll(props) {
   // console.log('props', props);
@@ -183,6 +186,9 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.tab,
     color: 'white',
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
 const Header = (props) => {
@@ -195,10 +201,15 @@ const Header = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [openNestedList, setOpenNestedList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
+    if (value !== 2) {
+      setSelectedIndex(0);
+      setOpenNestedList(false);
+    }
   };
 
   const handleClick = (e) => {
@@ -210,11 +221,29 @@ const Header = (props) => {
     setAnchorEl(null);
     setOpenMenu(false);
     setSelectedIndex(idx);
+    setOpenNestedList(false);
   };
 
   const handleClose = (e) => {
     setAnchorEl(null);
     setOpenMenu(false);
+    setOpenNestedList(false);
+  };
+
+  const handleListItemClick = (e, idx) => {
+    setValue(idx);
+    if (idx === 2) {
+      setOpenNestedList(!openNestedList);
+    } else {
+      setOpenNestedList(false);
+      setOpenDrawer(false);
+    }
+  };
+
+  const handleNestedListItemClick = (e, idx) => {
+    setSelectedIndex(idx);
+    setOpenNestedList(false);
+    setOpenDrawer(false);
   };
 
   const authMainButton = (
@@ -407,7 +436,7 @@ const Header = (props) => {
         {menuOptions.map((option, idx) => {
           return (
             <MenuItem
-              key={option}
+              key={`${option}${idx}`}
               component={Link}
               to={option.link}
               classes={{
@@ -439,29 +468,52 @@ const Header = (props) => {
       >
         <List disablePadding>
           {routes.map((route) => (
-            <ListItem
-              key={`${route}${route.activeIndex}`}
-              button
-              component={Link}
-              to={route.link}
-              onClick={() => {
-                setOpenDrawer(false);
-                setValue(route.activeIndex);
-              }}
-              selected={value === route.activeIndex}
-            >
-              <ListItemIcon>{route.drawerIcon}</ListItemIcon>
-              <ListItemText
-                disableTypography
-                className={
-                  value === route.activeIndex
-                    ? [classes.drawerItem, classes.drawerItemSelected]
-                    : classes.drawerItem
-                }
+            <>
+              <ListItem
+                key={`${route}${route.activeIndex}`}
+                button
+                component={Link}
+                to={route.link}
+                onClick={(e) => handleListItemClick(e, route.activeIndex)}
+                selected={value === route.activeIndex}
+                classes={{ selected: classes.drawerItemSelected }}
               >
-                {route.drawerName}
-              </ListItemText>
-            </ListItem>
+                <ListItemIcon>{route.drawerIcon}</ListItemIcon>
+                <ListItemText disableTypography className={classes.drawerItem}>
+                  {route.drawerName}
+                </ListItemText>
+                {route.activeIndex === 2 &&
+                  (openNestedList ? <ExpandLess /> : <ExpandMore />)}
+              </ListItem>
+              {route.activeIndex === 2 && (
+                <Collapse in={openNestedList} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {menuOptions.map((option, idx) => {
+                      return (
+                        <ListItem
+                          key={`${option}${idx}-recipes`}
+                          button
+                          component={Link}
+                          to={option.link}
+                          className={classes.nested}
+                          onClick={(e) =>
+                            handleNestedListItemClick(e, option.selectedIndex)
+                          }
+                          selected={idx === selectedIndex && value === 2}
+                        >
+                          <ListItemText
+                            disableTypography
+                            className={classes.drawerItem}
+                          >
+                            {option.name}
+                          </ListItemText>
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Collapse>
+              )}
+            </>
           ))}
           {props.auth.isAuthenticated ? authDrawerItem : guestDrawerItem}
         </List>
