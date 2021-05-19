@@ -12,6 +12,7 @@ import setAuthToken from './utils/setAuthToken';
 
 // Components
 import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 import Navbar from './components/layout/Navbar';
 import HomePage from './components/pages/HomePage';
 import WhyVeganPage from './components/pages/WhyVeganPage';
@@ -129,6 +130,7 @@ const App = (props) => {
             </Fab>
           </ScrollTop>
         </BrowserRouter>
+        <Footer />
       </ThemeProvider>
     </Provider>
   );
